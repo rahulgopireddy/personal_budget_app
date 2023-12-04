@@ -1,0 +1,167 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <p class="pull-right">
+        <span> Monthly Expenditure: </span>
+        <button
+          type="button"
+          class="btn btn-primary float-right"
+          data-toggle="modal"
+          data-target="#myModal"
+        >
+          Add Expense
+        </button>
+      </p>
+
+      <div class="col-md-12 p-3">
+        <div *ngIf="totalAmount > expenseLimit">
+          <h4>Expense for the month : {{ totalAmount }}</h4>
+          Expense limit Exceeded by {{ totalAmount - expenseLimit }} <br />
+          The Expense limit : {{ expenseLimit }}
+        </div>
+        <div *ngIf="totalAmount < expenseLimit">
+          <h4>Expense for the month : {{ totalAmount }}</h4>
+          You still have {{ expenseLimit - totalAmount }} <br />
+          The Expense limit : {{ expenseLimit }}
+        </div>
+        <div class="row">
+          <div class="col-md-12 barchart">1</div>
+        </div>
+
+        <ngx-datatable
+          class="bootstrap"
+          [rows]="ExpenseList"
+          [headerHeight]="50"
+          [footerHeight]="50"
+        >
+          <ngx-datatable-column name="Name">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Category">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Amount">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              {{ value }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Actions" prop="_id">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <!-- <button (click)="editExpense(value)"> -->
+              <button
+                type="button"
+                data-toggle="modal"
+                data-target="#myModal"
+                (click)="editExpense(value)"
+              >
+                <i class="bi bi-pencil-square"></i>
+              </button>
+
+              <!-- </button> -->
+              <button (click)="deleteExpense(value)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-footer>
+            <ng-template>
+              <button>
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button>
+                <i class="bi bi-trash"></i>
+              </button>
+            </ng-template>
+          </ngx-datatable-footer>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Second Part (Right) -->
+
+    <div class="p-3 width100 barchart">
+      <h3>Right Part</h3>
+      <p>This is the right part content.</p>
+
+      <div class="chart-container" style="position: relative; height: 20vh">
+        <canvas #myCanvas></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <canvas #pieChart></canvas>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="myModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog color-black" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Expense</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          #closeModal
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <!-- Add your modal content here -->
+          <!-- <p>This is the modal content.</p> -->
+
+          <div class="form-group">
+            <label for="name">Name of Expense:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category:</label>
+            <select
+              class="form-control"
+              id="category"
+              formControlName="category"
+            >
+              <option value="" disabled>Select a category</option>
+              <option *ngFor="let cat of categories" [value]="cat">
+                {{ cat }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="amount"
+              formControlName="amount"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+.color-black {
+  color: black;
+}
+.width20 {
+  width: 20%;
+}
+.hidden {
+  display: none !important;
+}
+
+.ngx-datatable {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.pull-right {
+  align-items: right;
+}
+
+.barchart {
+  width: 50%;
+}

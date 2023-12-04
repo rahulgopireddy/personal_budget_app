@@ -1,0 +1,13 @@
+<div
+  *ngIf="showWarning"
+  class="alert alert-warning alert-dismissible fade show"
+  role="alert"
+>
+  Warning: Your token will expire in {{ countdownTime }} seconds.
+  <button type="button" class="close" (click)="hideAlert()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <button class="btn btn-primary btn-sm" (click)="refreshToken()">
+    Refresh Token
+  </button>
+</div>

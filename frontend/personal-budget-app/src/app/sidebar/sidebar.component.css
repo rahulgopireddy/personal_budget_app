@@ -1,0 +1,43 @@
+aside {
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  background-color: #333;
+  padding-top: 20px;
+  color: #fff;
+  transition: width 0.3s;
+  overflow-x: hidden;
+}
+
+aside.collapsed {
+  width: 80px;
+}
+
+.toggle-btn {
+  border: none;
+  background: none;
+  font-size: 1.5em;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.user-profile img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.user-profile h5 {
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  color: #fff !important;
+}
+
+.nav-item {
+  padding: 8px 0;
+}

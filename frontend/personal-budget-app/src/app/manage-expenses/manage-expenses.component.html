@@ -1,0 +1,190 @@
+<p>Set the Monthly Expense Limit</p>
+<div class="container-flex">
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+    <div class="row expenselimit">
+      <div class="col-md-3">
+        <input formControlName="monthlybudget" required type="number" />
+        <label
+          alt="Montly Expenditure"
+          placeholder="Montly Expenditure"
+        ></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('monthlybudget').invalid &&
+            (expenseForm.get('monthlybudget').dirty ||
+              expenseForm.get('monthlybudget').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('monthlybudget').hasError('required')">
+            Groceries is required.
+          </span>
+        </span>
+      </div>
+    </div>
+    <p>Set the Expense Limit For Available Categories</p>
+    <div class="row">
+      <p class="col-md-3">
+        <input formControlName="utilities" required type="number" />
+        <label alt="utilities" placeholder="utilities"></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('utilities').invalid &&
+            (expenseForm.get('utilities').dirty ||
+              expenseForm.get('utilities').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('utilities').hasError('required')">
+            utilities is required.
+          </span>
+        </span>
+      </p>
+      <p class="col-md-3">
+        <input formControlName="rent" required type="number" />
+        <label alt="rent" placeholder="rent"></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('rent').invalid &&
+            (expenseForm.get('rent').dirty || expenseForm.get('rent').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('rent').hasError('required')">
+            rent is required.
+          </span>
+        </span>
+      </p>
+    </div>
+    <div class="row">
+      <p class="col-md-3">
+        <input formControlName="transportation" required type="number" />
+        <label alt="transportation" placeholder="transportation"></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('transportation').invalid &&
+            (expenseForm.get('transportation').dirty ||
+              expenseForm.get('transportation').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('transportation').hasError('required')">
+            transportation is required.
+          </span>
+        </span>
+      </p>
+      <p class="col-md-3">
+        <input formControlName="entertainment" required type="number" />
+        <label alt="entertainment" placeholder="entertainment"></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('entertainment').invalid &&
+            (expenseForm.get('entertainment').dirty ||
+              expenseForm.get('entertainment').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('entertainment').hasError('required')">
+            entertainment is required.
+          </span>
+        </span>
+      </p>
+    </div>
+    <div class="row">
+      <p class="col-md-3">
+        <input formControlName="insurance" required type="number" />
+        <label alt="insurance" placeholder="insurance"></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('insurance').invalid &&
+            (expenseForm.get('insurance').dirty ||
+              expenseForm.get('insurance').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('insurance').hasError('required')">
+            insurance is required.
+          </span>
+        </span>
+      </p>
+      <p class="col-md-3">
+        <input formControlName="debtpayments" required type="number" />
+        <label alt="debt payments" placeholder="debt payments"></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('debtpayments').invalid &&
+            (expenseForm.get('debtpayments').dirty ||
+              expenseForm.get('debtpayments').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('debtpayments').hasError('required')">
+            debt payments is required.
+          </span>
+        </span>
+      </p>
+    </div>
+    <div class="row">
+      <p class="col-md-3">
+        <input formControlName="education" required type="number" />
+        <label alt="education" placeholder="education"></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('education').invalid &&
+            (expenseForm.get('education').dirty ||
+              expenseForm.get('education').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('education').hasError('required')">
+            education is required.
+          </span>
+        </span>
+      </p>
+      <p class="col-md-3">
+        <input formControlName="savings" required type="number" />
+        <label
+          alt="savings Expenditure"
+          placeholder="savings Expenditure"
+        ></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('savings').invalid &&
+            (expenseForm.get('savings').dirty ||
+              expenseForm.get('savings').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('savings').hasError('required')">
+            savings is required.
+          </span>
+        </span>
+      </p>
+    </div>
+    <div class="row">
+      <p class="col-md-3">
+        <input formControlName="miscellaneous" required type="number" />
+        <label alt="miscellaneous" placeholder="miscellaneous"></label>
+
+        <span
+          *ngIf="
+            expenseForm.get('miscellaneous').invalid &&
+            (expenseForm.get('miscellaneous').dirty ||
+              expenseForm.get('miscellaneous').touched)
+          "
+        >
+          <span *ngIf="expenseForm.get('miscellaneous').hasError('required')">
+            miscellaneous is required.
+          </span>
+        </span>
+      </p>
+    </div>
+
+    <div class="col-md-6">
+      <p class="text-center col-md-12 offset-md-4">
+        <button class="button-87 btn pull-right" role="button">Save</button>
+      </p>
+    </div>
+  </form>
+</div>
+<!-- HTML !-->
