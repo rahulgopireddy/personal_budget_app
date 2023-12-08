@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 
+const dbconnectionString =
+  "mongodb+srv://dbUserRahul:Fall%402023@atlascluster.7aitlpf.mongodb.net/budgetAppDb";
+//dbUserRahul
+//Fall@2023
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/myapp", {
+    await mongoose.connect(`${dbconnectionString}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -15,7 +19,7 @@ const connectDB = async () => {
 
 const disconnectDB = () => {
   mongoose.disconnect(() => {
-    console.log("MongoDB Disconnected");
+    console.log("Yes,MongoDB Disconnected");
   });
 };
 
