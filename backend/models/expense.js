@@ -6,13 +6,14 @@ const expenseSchema = new Schema({
   category: { type: String, required: true },
   amount: { type: Number, required: true, min: 0 },
   date: { type: String, required: true },
+  month: { type: String, required: true },
   user: { type: String, required: true },
 });
 
 // Middleware for pre-save validation and modification
 expenseSchema.pre("save", function (next) {
   // Example: Convert category to uppercase
-  this.category = this.category.toUpperCase();
+  this.category = this.category;
 
   // Continue with the save operation
   next();

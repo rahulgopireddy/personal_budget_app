@@ -55,11 +55,12 @@ export class WidgetComponent {
   ];
   expenseForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    category: ['', Validators.required],
+    category: ['Income', Validators.required],
     amount: [
       '',
       [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)],
     ],
+    month: ['December', Validators.required],
     _id: '',
   });
   categories = [
@@ -79,7 +80,20 @@ export class WidgetComponent {
     'Childcare',
     'Investments',
   ];
-
+  months: string[] = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
   constructor(
     private toastr: ToastrService,
     private fb: FormBuilder,
@@ -128,14 +142,17 @@ export class WidgetComponent {
       const expenseName = this.expenseForm.get('name')?.value;
       const expenseAmount = this.expenseForm.get('amount')?.value;
       const expenseCategory = this.expenseForm.get('category')?.value;
+      const expenseMonth = this.expenseForm.get('month')?.value;
       const user = this._ExpenseService.getUserEmail();
       const expenseData = {
         name: expenseName,
         amount: expenseAmount,
         date: new Date(),
         category: expenseCategory,
+        month: expenseMonth,
         user: this._ExpenseService.getUserEmail(),
       };
+      console.log(expenseData);
 
       if (this.expenseForm.get('_id')?.value && this.isEditedExpense) {
         this._ExpenseService
@@ -182,13 +199,16 @@ export class WidgetComponent {
   }
 
   editExpense(expense: any) {
+    console.log(expense);
     this.isEditedExpense = true;
     const foundObject = this.ExpenseList.find((obj) => obj._id === expense);
+    console.log(foundObject);
     if (foundObject) {
       this.expenseForm.setValue({
         amount: foundObject.amount,
         category: foundObject.category,
         name: foundObject.name,
+        month: foundObject.month,
         _id: foundObject._id,
       });
     }
@@ -233,21 +253,33 @@ export class WidgetComponent {
       tap(
         (data: any) => {
           this.expenseLimit = data.monthlybudget;
+
           if (data) {
+            if (Object.keys(data).length === 0) {
+              this.toastr.error(
+                'Please Add the expense to see the Visualisations ',
+                'No Expense data Available ',
+                {
+                  timeOut: 30000,
+                  positionClass: 'toast-bottom-right',
+                }
+              );
+            }
             this.expenseForm.patchValue(data);
           } else {
+            console.log(data.length);
           }
         },
         (error) => {
           console.error('Error:', error);
-          this.toastr.warning(
-            'Please set Expense Limit for this month',
-            'No Expense Limit Set ',
-            {
-              timeOut: 3000,
-              positionClass: 'toast-bottom-right',
-            }
-          );
+          // this.toastr.warning(
+          //   'Please set Expense Limit for this month',
+          //   'No Expense Limit Set ',
+          //   {
+          //     timeOut: 3000,
+          //     positionClass: 'toast-bottom-right',
+          //   }
+          // );
           this.toastr.error('Failed to load expense data.');
         }
       )
@@ -343,6 +375,7 @@ export class WidgetComponent {
     const totalexpenditureCategory = this.calculateTotalExpenditure(
       this.ExpenseList
     );
+
     const ctx: any = this.piechartCanvas.nativeElement.getContext('2d');
     if (this.categoryPieChartq) {
       this.categoryPieChartq.destroy();
@@ -451,6 +484,28 @@ export class WidgetComponent {
     const options: ChartOptions = {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        onComplete: () => {
+          if (
+            this.categoryRadialChartq &&
+            this.categoryRadialChartq.data &&
+            this.categoryRadialChartq.data.datasets &&
+            this.categoryRadialChartq.data.datasets[0] &&
+            this.categoryRadialChartq.data.datasets[0].data &&
+            this.categoryRadialChartq.data.datasets[0].data.length === 0
+          ) {
+            // If there is no data, display a custom message
+            ctx.font = '20px Arial';
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'center';
+            ctx.fillText(
+              'No data available',
+              ctx.canvas.width / 2,
+              ctx.canvas.height / 2
+            );
+          }
+        },
+      },
       scales: {
         r: {
           grid: {

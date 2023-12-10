@@ -119,3 +119,11 @@
 .stats .card {
   margin: 10px 25px 10px 25px;
 }
+
+.showData {
+  display: block;
+}
+
+.noData {
+  display: none;
+}

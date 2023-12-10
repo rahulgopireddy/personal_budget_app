@@ -31,7 +31,7 @@ router.get("/expenselimit/", async (req, res) => {
 });
 router.post("/expenselimit", async (req, res) => {
   const expenseData = req.body;
-  console.log(req.body);
+  console.log(expenseData);
   try {
     await ExpenseLimit.findOneAndUpdate(
       { user: expenseData.user, currentMonth: expenseData.currentMonth },
@@ -51,7 +51,7 @@ router.post("/expenselimit", async (req, res) => {
 
 // Create a new expense
 router.post("/", authMiddleware.authenticate, async (req, res) => {
-  const { name, category, amount, user, date } = req.body;
+  const { name, category, amount, user, date, month } = req.body;
   try {
     const newExpense = await Expense.create({
       name,
@@ -59,6 +59,7 @@ router.post("/", authMiddleware.authenticate, async (req, res) => {
       amount,
       user,
       date,
+      month,
     });
     res.status(201).json({ message: "add expense recived" });
     // res.status(201).json(newExpense);

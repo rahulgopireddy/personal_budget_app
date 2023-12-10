@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenService } from 'src/app/services/token.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-token-warning',
   templateUrl: './token-warning.component.html',
@@ -10,15 +12,12 @@ export class TokenWarningComponent {
   showWarning: boolean = false;
   countdownTime: number = 20;
   constructor(
+    private toastr: ToastrService,
     private tokenService: TokenService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     setInterval(() => {
-      // const expirationTime: any = this.authService.getExpirationTime(); // Implement this method in AuthService
-      // const currentTime = Date.now();
-      // const timeUntilExpiration = expirationTime - currentTime;
-      // console.log(timeUntilExpiration, 'time-toekn');
-      // if (timeUntilExpiration <= 20000) this.showWarning = true;
       this.checkTokenExpiration();
     }, 1000);
   }
@@ -40,7 +39,6 @@ export class TokenWarningComponent {
         .getTime();
       const currentTime = new Date().getTime();
       const timeToExpiration = expirationTime - currentTime;
-
       if (timeToExpiration > 0 && timeToExpiration <= 20000) {
         this.showWarning = true;
         this.startCountdown(timeToExpiration / 1000);
@@ -54,8 +52,13 @@ export class TokenWarningComponent {
     const interval = setInterval(() => {
       this.countdownTime = Math.round(seconds);
       seconds--;
-
       if (seconds < 0) {
+        this.toastr.error('Session expired. Please login.', ' ', {
+          timeOut: 3000,
+          positionClass: 'toast-bottom-right',
+        });
+        this.router.navigate(['/login']);
+        console.log(seconds);
         clearInterval(interval);
         this.hideAlert();
       }

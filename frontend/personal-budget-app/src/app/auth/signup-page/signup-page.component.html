@@ -173,15 +173,14 @@
     <div class="shape"></div>
     <div class="shape"></div>
   </div>
-  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <div class="heading">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" role="form">
+    <header class="heading">
       <h2>PurseGuard</h2>
-      <h4 class="">Login Page</h4>
-    </div>
+      <h4 class="">Signup Page</h4>
+    </header>
 
-    <label for="username">Name</label>
-    <!-- <input type="text" placeholder="Email or Phone" id="username" /> -->
-    <input type="text" class="" id="name" formControlName="name" />
+    <label for="name">Name</label>
+    <input type="text" id="name" formControlName="name" aria-required="true" />
     <div
       *ngIf="
         signupForm.get('name')?.hasError('required') &&
@@ -190,8 +189,14 @@
     >
       Name is required.
     </div>
+
     <label for="email">Email</label>
-    <input type="email" class="" id="email" formControlName="email" />
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      aria-required="true"
+    />
     <div
       *ngIf="
         signupForm.get('email')?.hasError('required') &&
@@ -208,8 +213,14 @@
     >
       Invalid email address.
     </div>
+
     <label for="password">Password</label>
-    <input type="password" class="" id="password" formControlName="password" />
+    <input
+      type="password"
+      id="password"
+      formControlName="password"
+      aria-required="true"
+    />
     <div
       *ngIf="
         signupForm.get('password')?.hasError('required') &&
@@ -234,12 +245,13 @@
     >
       Password must contain at least one letter and one number.
     </div>
+
     <label for="confirmPassword">Confirm Password</label>
     <input
       type="password"
-      class=""
       id="confirmPassword"
       formControlName="confirmPassword"
+      aria-required="true"
     />
     <div
       *ngIf="
@@ -249,11 +261,11 @@
     >
       Passwords do not match.
     </div>
+
     <button type="submit" class="log">Signup</button>
-    <!-- <button class="log">Log In</button> -->
     <br />
     <p class="text-center pdt-15">
-      Already a member ? Please click here to login
+      Already a member? Please click here to login
     </p>
     <button class="signup-btn" (click)="redirectToLoginPage()">Login</button>
   </form>

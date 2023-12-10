@@ -19,7 +19,7 @@ router.post("/login", authenticateUser, (req, res) => {
   const token = jwt.sign(
     { user: { id: req.user._id, email: req.user.email } },
     "yoursecretkey",
-    { expiresIn: "50min" }
+    { expiresIn: "55min" }
   );
 
   res.json({ token });

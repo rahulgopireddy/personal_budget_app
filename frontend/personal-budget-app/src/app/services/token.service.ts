@@ -26,6 +26,7 @@ export class TokenService {
 
       if (timeToExpiration > 0 && timeToExpiration <= 20000) {
         // Show alert when token is about to expire in 20 seconds
+
         alert('Warning: Your token will expire in 20 seconds. Refresh it now!');
       }
     }
