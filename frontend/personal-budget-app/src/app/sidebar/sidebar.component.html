@@ -1,4 +1,4 @@
-<div class="user-profile text-center">
+<!-- <div class="user-profile text-center">
   <img src="https://via.placeholder.com/80" alt="User Image" />
   <h5>User Name</h5>
 </div>
@@ -6,4 +6,45 @@
   <li routerLink="/dashboard">Dashboard</li>
   <li routerLink="/dashboard/manage-expenses">Manage Expenses</li>
   <li (click)="logout()">logout</li>
-</ul>
+</ul> -->
+
+<div class="sidebar-wrapper">
+  <div class="user-profile text-center">
+    <p class="text-center"><img src="../../assets/user.png" alt="" /></p>
+    <h5></h5>
+  </div>
+  <ul>
+    <li
+      routerLink="/dashboard"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <p class="mr-0">
+        <a>
+          <img src="../../assets/dashboard.png" alt="" width="15px" />
+
+          Dashboard</a
+        >
+      </p>
+    </li>
+    <li
+      routerLink="/dashboard/manage-expenses"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <p class="mr-0">
+        <a>
+          <img src="../../assets/Wallet.png" alt="" width="15px" />
+
+          Manage Expenses</a
+        >
+      </p>
+    </li>
+    <li (click)="logout()" class="logout-btn">
+      <p class="mr-0">
+        <img src="../../assets/logout.png" alt="" width="15px" />
+        logout
+      </p>
+    </li>
+  </ul>
+</div>

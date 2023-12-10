@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="row">
     <div class="col-md-12">
       <p class="pull-right">
@@ -51,7 +51,6 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="Actions" prop="_id">
             <ng-template let-value="value" ngx-datatable-cell-template>
-              <!-- <button (click)="editExpense(value)"> -->
               <button
                 type="button"
                 data-toggle="modal"
@@ -61,7 +60,6 @@
                 <i class="bi bi-pencil-square"></i>
               </button>
 
-              <!-- </button> -->
               <button (click)="deleteExpense(value)">
                 <i class="bi bi-trash"></i>
               </button>
@@ -82,8 +80,6 @@
     </div>
   </div>
   <div class="row">
-    <!-- Second Part (Right) -->
-
     <div class="p-3 width100 barchart">
       <h3>Right Part</h3>
       <p>This is the right part content.</p>
@@ -96,7 +92,8 @@
   <div class="row">
     <canvas #pieChart></canvas>
   </div>
-</div>
+</div> -->
+
 <div
   class="modal fade"
   id="myModal"
@@ -121,9 +118,6 @@
       </div>
       <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
         <div class="modal-body">
-          <!-- Add your modal content here -->
-          <!-- <p>This is the modal content.</p> -->
-
           <div class="form-group">
             <label for="name">Name of Expense:</label>
             <input
@@ -162,6 +156,113 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row text-right">
+    <div class="col-md-11">
+      <button
+        type="button"
+        class="btn btn-primary float-right"
+        data-toggle="modal"
+        data-target="#myModal"
+      >
+        Add Expense
+      </button>
+    </div>
+  </div>
+  <div class="row pdt-35 stats">
+    <div class="card blue col-md-3">
+      <div class="title">Expense Limit</div>
+      <i class="zmdi zmdi-upload"></i>
+      <div class="value">${{ expenseLimit }}</div>
+    </div>
+    <div class="card green col-md-3">
+      <div class="title">Money Spent</div>
+      <i class="zmdi zmdi-upload"></i>
+      <div class="value">${{ totalAmount }}</div>
+    </div>
+    <div class="card orange col-md-3">
+      <div class="title">Balance Left</div>
+      <i class="zmdi zmdi-upload"></i>
+      <div class="value">${{ balanceLimit }}</div>
+    </div>
+  </div>
+  <div class="row pdt-35">
+    <div class="card col-md-8">
+      <ngx-datatable
+        class="bootstrap datatable"
+        [rows]="ExpenseList"
+        [headerHeight]="50"
+        [footerHeight]="50"
+      >
+        <ngx-datatable-column name="Name" [flexGrow]="5">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Category" [flexGrow]="1">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Amount" [flexGrow]="1">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            ${{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Actions" prop="_id" [flexGrow]="1">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            <button
+              type="button"
+              class="table-btn"
+              data-toggle="modal"
+              data-target="#myModal"
+              (click)="editExpense(value)"
+            >
+              <i class="bi bi-pencil-square"> </i>
+            </button>
+
+            <button class="table-btn" (click)="deleteExpense(value)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-footer>
+          <ng-template>
+            test
+            <button>
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button>
+              <i class="bi bi-trash"></i>
+            </button>
+          </ng-template>
+        </ngx-datatable-footer>
+      </ngx-datatable>
+      <span class="text-center table-footer">
+        You can sort and resize columns of the table by clicking on the selected
+        column !
+      </span>
+    </div>
+    <div class="card col-md-3">
+      <div class="row">
+        <canvas #pieChart></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card col-md-4">
+      <div class="chart-container">
+        <canvas #radialChart></canvas>
+      </div>
+    </div>
+    <div class="card col-md-7">
+      <div class="chart-container">
+        <canvas #myCanvas height="250px"></canvas>
+      </div>
     </div>
   </div>
 </div>

@@ -1,6 +1,12 @@
-<div class="container col-md-2">
+<!-- <div class=" ">
   <h1>Logo</h1>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <h3>Login Page</h3>
     <div class="form-group">
       <label for="email">Email</label>
       <input
@@ -59,4 +65,75 @@
   <div *ngIf="alertMessage" class="alert alert-warning">
     {{ alertMessage }}
   </div>
+</div> -->
+
+<div class="login_container">
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="heading">
+      <h2>PurseGuard</h2>
+      <h4 class="">Login Page</h4>
+    </div>
+
+    <label for="username">Email</label>
+    <!-- <input type="text" placeholder="Email or Phone" id="username" /> -->
+    <input
+      type="email"
+      class=""
+      id="username"
+      formControlName="email"
+      placeholder="Email"
+    />
+    <div
+      *ngIf="
+        loginForm.get('email')!.hasError('required') &&
+        (loginForm.get('email')!.dirty || loginForm.get('email')!.touched)
+      "
+    >
+      Email is required.
+    </div>
+    <div
+      *ngIf="
+        loginForm.get('email')!.hasError('email') &&
+        (loginForm.get('email')!.dirty || loginForm.get('email')!.touched)
+      "
+    >
+      Invalid email address.
+    </div>
+    <label for="password">Password</label>
+    <!-- <input type="password" placeholder="Password" id="password" /> -->
+
+    <input
+      type="password"
+      class=""
+      placeholder="Password"
+      id="password"
+      formControlName="password"
+    />
+    <div
+      *ngIf="
+        loginForm.get('password')!.hasError('required') &&
+        (loginForm.get('password')!.dirty || loginForm.get('password')!.touched)
+      "
+    >
+      Password is required.
+    </div>
+    <div
+      *ngIf="
+        loginForm.get('password')!.hasError('pattern') &&
+        (loginForm.get('password')!.dirty || loginForm.get('password')!.touched)
+      "
+    >
+      Password must contain at least 6 characters, including one letter and one
+      number.
+    </div>
+
+    <button class="log">Log In</button>
+    <br />
+    <p class="text-center pdt-15">Not a Member Yet ? Click here to</p>
+    <button class="signup-btn" (click)="redirectToSignUpPage()">Signup</button>
+  </form>
 </div>

@@ -12,6 +12,7 @@ interface Expense {
   providedIn: 'root',
 })
 export class ExpenseService {
+  // private apiUrl = 'http://45.55.66.148:3000/expense';
   private apiUrl = 'http://localhost:3000/expense';
 
   private getHeaders(): HttpHeaders {

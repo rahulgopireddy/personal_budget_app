@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert-service.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -15,7 +16,8 @@ export class LoginPageComponent {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private toastr: ToastrService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -23,7 +25,9 @@ export class LoginPageComponent {
         '',
         [
           Validators.required,
-          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+          Validators.pattern(
+            /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/
+          ),
         ],
       ],
     });
@@ -35,7 +39,9 @@ export class LoginPageComponent {
       // You can set a timeout to clear the message after a specific duration if needed
     });
   }
-
+  redirectToSignUpPage() {
+    this.router.navigate([`/signup`]); // Replace 'your-route' with the actual route path
+  }
   onSubmit() {
     console.log(this.loginForm.value);
     const LoginData = {
@@ -48,6 +54,12 @@ export class LoginPageComponent {
         this.router.navigate(['/dashboard']);
       },
       (error) => {
+        this.toastr.error('Check Email and Password', 'Login Failed', {
+          timeOut: 5000, // Optional: time in milliseconds before the toast closes automatically
+          closeButton: true, // Optional: display a close button
+          progressBar: true, // Optional: display a progress bar
+          positionClass: 'toast-bottom-right', // Optional: set the position of the toast
+        });
         console.error('Login failed:', error);
       }
     );

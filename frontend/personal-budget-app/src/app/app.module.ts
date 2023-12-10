@@ -17,6 +17,7 @@ import { WidgetComponent } from './widget/widget.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotFoundComponent } from './not-found/not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SidebarComponent,
     ManageExpensesComponent,
     WidgetComponent,
+    NotFoundComponent,
     // TokenWarningComponent,
   ],
   imports: [

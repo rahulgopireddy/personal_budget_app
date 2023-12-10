@@ -23,11 +23,8 @@ aside.collapsed {
 }
 
 .user-profile img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 10px;
+  margin-top: 8%;
+  width: 45px;
 }
 
 .user-profile h5 {
@@ -40,4 +37,40 @@ aside.collapsed {
 
 .nav-item {
   padding: 8px 0;
+}
+
+.sidebar-wrapper {
+  height: 100vh;
+  background-image: linear-gradient(
+    to bottom,
+    #f2990b,
+    #f59d18,
+    #f8a021,
+    #fba429,
+    #fea830
+  );
+}
+
+.sidebar-wrapper ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.sidebar-wrapper ul li {
+  list-style: none;
+  margin: 0px;
+  padding: 10px;
+}
+.mr-0 {
+  margin: 0px;
+}
+
+.logout-btn {
+  position: absolute;
+  bottom: 30px;
+}
+
+.active-link {
+  background-color: #fea830;
 }

@@ -20,3 +20,102 @@
 .barchart {
   width: 50%;
 }
+
+.card {
+  border-radius: 8px;
+  color: #fff;
+  padding: 10px;
+  position: relative;
+  margin: 10px;
+}
+
+.card .title {
+  display: inline-block;
+  font-size: 12px;
+  padding: 0px 10px;
+  text-transform: uppercase;
+}
+
+.card .value {
+  font-size: 28px;
+  padding: 0 10px;
+}
+
+.card .stat {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  margin-top: 25px;
+  padding: 10px 10px;
+  text-transform: uppercase;
+}
+
+.pdt-35 {
+  padding-top: 0px;
+}
+.card.blue {
+  background-color: #2298f1;
+}
+
+.card.green {
+  background-color: #66b92e;
+}
+
+.card.orange {
+  background-color: #da932c;
+}
+
+.ngx-datatable {
+  background-color: #273142;
+  border: 1px solid #313d4f;
+  overflow-x: auto;
+  width: 100%;
+  color: #fff;
+  padding: 10px;
+}
+
+.table-btn {
+  margin: 5px 6px;
+  background: transparent;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+}
+
+.datatable {
+  width: 100%;
+  height: 35vh;
+}
+
+.datatable-column {
+  flex: 1;
+}
+.table-footer {
+  color: #817878;
+  width: 100%;
+  font-size: 11px;
+}
+/* Add this to your global styles or component styles */
+:host /deep/ ngx-datatable-header-cell .datatable-icon-up,
+:host /deep/ ngx-datatable-header-cell .datatable-icon-down {
+  font-size: 16px; /* Set the font size */
+  color: #007bff; /* Set the color */
+  /* Add other styles as needed */
+}
+
+:host /deep/ ngx-datatable-header-cell.sort-active .datatable-icon-up,
+:host /deep/ ngx-datatable-header-cell.sort-active .datatable-icon-down {
+  /* Additional styles for the active sort state, if desired */
+}
+
+.resize-handle {
+  color: #fff;
+}
+
+#pieChart {
+  width: 100px; /* Adjust the width as needed */
+  height: 100px; /* Adjust the height as needed */
+}
+
+.stats .card {
+  margin: 10px 25px 10px 25px;
+}

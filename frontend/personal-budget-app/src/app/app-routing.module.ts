@@ -7,6 +7,7 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { AuthGuard } from './services/auth.guard';
 import { ManageExpensesComponent } from './manage-expenses/manage-expenses.component';
 import { WidgetComponent } from './widget/widget.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

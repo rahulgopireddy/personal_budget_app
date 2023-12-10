@@ -121,3 +121,11 @@ a[aria-expanded="true"] {
 .color-black {
   color: #000;
 }
+
+.pd-0 {
+  padding: 0px;
+  margin: 0px;
+}
+.dashboard-layout {
+  height: 100vh;
+}

@@ -32,6 +32,7 @@ export class WidgetComponent {
   @ViewChild('closeModal') _closeModal: ElementRef;
   @ViewChild('categoryBarChart') barchartCanvas: ElementRef<HTMLCanvasElement>;
   @ViewChild('pieChart') piechartCanvas: ElementRef<HTMLCanvasElement>;
+  @ViewChild('radialChart') radialChartCanvas: ElementRef<HTMLCanvasElement>;
   user: any = this._ExpenseService.getUserEmail();
   @ViewChild('myCanvas') myCanvas: ElementRef<HTMLCanvasElement>;
   private myChart: Chart | undefined;
@@ -39,14 +40,18 @@ export class WidgetComponent {
   isEditedExpense = false;
   totalAmount: number = 0;
   expenseLimit: number = 0;
-
+  balanceLimit: number = 0;
   private categoryBarChartq: Chart | undefined;
   private categoryPieChartq: Chart | undefined;
+  private categoryRadialChartq: Chart | undefined;
+  customMessages = {
+    footerTotalTemplate: 'Custom message or information here',
+  };
   columns = [
-    { prop: 'name', name: 'Name' },
-    { prop: 'category', name: 'Category' },
-    { prop: 'amount', name: 'Amount' },
-    { name: 'Actions', prop: '_id' },
+    { prop: 'name', name: 'Name', flexGrow: 3 },
+    { prop: 'category', name: 'Category', flexGrow: 3 },
+    { prop: 'amount', name: 'Amount', flexGrow: 3 },
+    { name: 'Actions', prop: '_id', flexGrow: 3 },
   ];
   expenseForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
@@ -86,6 +91,7 @@ export class WidgetComponent {
     this.barchartCanvas = {} as ElementRef;
     this.myCanvas = {} as ElementRef;
     this.piechartCanvas = {} as ElementRef;
+    this.radialChartCanvas = {} as ElementRef;
   }
 
   ngOnInit() {
@@ -113,6 +119,7 @@ export class WidgetComponent {
   createChart() {
     this.createCategoryBarChart();
     this.createCategoryCircularChart();
+    this.createRadialChart();
   }
 
   onSubmit() {
@@ -130,7 +137,7 @@ export class WidgetComponent {
         user: this._ExpenseService.getUserEmail(),
       };
 
-      if (this.expenseForm.get('_id')?.value) {
+      if (this.expenseForm.get('_id')?.value && this.isEditedExpense) {
         this._ExpenseService
           .updateExpense(this.expenseForm.get('_id')?.value, expenseData)
           .subscribe((res) => {
@@ -170,8 +177,6 @@ export class WidgetComponent {
         const values = this.filterExpensesByCurrentMonth();
         this.calculateTotalAmount();
         this.ExpenseList = values;
-        // console.log('values', values);
-        // console.log('values', response);
       })
     );
   }
@@ -210,7 +215,6 @@ export class WidgetComponent {
     return this.ExpenseList.filter((expense) => {
       const expenseDate = new Date(expense.date);
       const expenseMonth = expenseDate.getMonth() + 1;
-      // console.log(expenseMonth, currentMonth);
       return expenseMonth === currentMonth;
     });
   }
@@ -219,6 +223,9 @@ export class WidgetComponent {
       (sum, expense) => sum + expense.amount,
       0
     );
+    setTimeout(() => {
+      this.balanceLimit = this.expenseLimit - this.totalAmount;
+    }, 3);
   }
 
   loadExpenseData() {
@@ -226,7 +233,6 @@ export class WidgetComponent {
       tap(
         (data: any) => {
           this.expenseLimit = data.monthlybudget;
-          // console.log(data, 'test');
           if (data) {
             this.expenseForm.patchValue(data);
           } else {
@@ -257,6 +263,32 @@ export class WidgetComponent {
     if (this.categoryBarChartq) {
       this.categoryBarChartq.destroy();
     }
+    const options: ChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)',
+          },
+        },
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)',
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: 'Budget Spent Comparision ',
+        },
+      },
+    };
 
     this.categoryBarChartq = new Chart(ctx, {
       type: 'bar',
@@ -301,26 +333,8 @@ export class WidgetComponent {
           },
         ],
       },
-      options: {
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-            },
-          },
-          y: {
-            grid: {
-              display: false,
-            },
-            beginAtZero: true,
-          },
-        },
-      },
+
+      options: options,
     });
   }
 
@@ -330,7 +344,6 @@ export class WidgetComponent {
       this.ExpenseList
     );
     const ctx: any = this.piechartCanvas.nativeElement.getContext('2d');
-    console.log(totalexpenditureCategory, 'test');
     if (this.categoryPieChartq) {
       this.categoryPieChartq.destroy();
     }
@@ -393,10 +406,83 @@ export class WidgetComponent {
 
     const options: ChartOptions = {
       animation: {},
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: 'Category  Wise money spent',
+        },
+      },
     };
-    console.log(ctx);
     this.categoryPieChartq = new Chart(ctx, {
       type: 'doughnut',
+      data: data,
+      options: options,
+    });
+  }
+
+  createRadialChart() {
+    this.loading = false;
+    // const totalexpenditureCategory = this.calculateTotalExpenditure(
+    //   this.ExpenseList
+    // );
+    const ctx: any = this.radialChartCanvas.nativeElement.getContext('2d');
+    if (this.categoryRadialChartq) {
+      this.categoryRadialChartq.destroy();
+    }
+    const totalexpenditureCategory = {
+      Debt: this.expenseLimit,
+      Credit: this.totalAmount,
+      Balance: this.balanceLimit,
+    };
+    const data: ChartData = {
+      labels: Object.keys(totalexpenditureCategory),
+      datasets: [
+        {
+          data: Object.values(totalexpenditureCategory),
+          backgroundColor: ['#2298f1', '#C33636', '#66b92e'],
+          borderColor: 'rgba(255, 255, 255, 1)',
+          borderWidth: 2,
+        },
+      ],
+    };
+    const options: ChartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)',
+            lineWidth: 1,
+          },
+          angleLines: {
+            color: 'rgba(255, 255, 255, 0.5)',
+            lineWidth: 1,
+          },
+          suggestedMin: 0,
+          suggestedMax: this.expenseLimit,
+        },
+      },
+      elements: {
+        point: {
+          radius: 0,
+        },
+      },
+      plugins: {
+        legend: {
+          display: true,
+        },
+        title: {
+          display: true,
+          text: 'Total Expenditure',
+        },
+      },
+    };
+
+    this.categoryRadialChartq = new Chart(ctx, {
+      type: 'polarArea',
       data: data,
       options: options,
     });
@@ -416,7 +502,6 @@ export class WidgetComponent {
         totalExpenditure[formattedCategory] = amount;
       }
     });
-    console.log(totalExpenditure);
     return totalExpenditure;
   }
 }
