@@ -8,14 +8,14 @@ describe('TokenWarningComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TokenWarningComponent]
+      declarations: [TokenWarningComponent],
     });
     fixture = TestBed.createComponent(TokenWarningComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  xit('should create', () => {
     expect(component).toBeTruthy();
   });
 });

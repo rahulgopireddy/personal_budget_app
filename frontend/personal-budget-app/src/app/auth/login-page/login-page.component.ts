@@ -41,7 +41,7 @@ export class LoginPageComponent {
     };
     this.authService.login(LoginData).subscribe(
       () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigateByUrl('/dashboard');
       },
       (error) => {
         this.toastr.error('Check Email and Password', 'Login Failed', {

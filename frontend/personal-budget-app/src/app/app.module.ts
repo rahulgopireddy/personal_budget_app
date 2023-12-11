@@ -18,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ExpenseService } from './services/expense.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,13 @@ import { NotFoundComponent } from './not-found/not-found.component';
     NgxDatatableModule,
     BrowserAnimationsModule,
   ],
-  providers: [AuthService, AuthGuard, TokenService],
+  providers: [
+    AuthService,
+    AuthGuard,
+    TokenService,
+    ExpenseService,
+    AuthService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

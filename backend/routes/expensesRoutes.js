@@ -19,10 +19,8 @@ router.get("/user/:userId", async (req, res) => {
 
 router.get("/expenselimit/", async (req, res) => {
   const { user, currentMonth } = req.query;
-  console.log(req.query);
   try {
     const expenseData = await ExpenseLimit.findOne({ user, currentMonth });
-    console.log(expenseData);
     res.json(expenseData || {});
   } catch (error) {
     console.error("Error:", error);
@@ -31,7 +29,6 @@ router.get("/expenselimit/", async (req, res) => {
 });
 router.post("/expenselimit", async (req, res) => {
   const expenseData = req.body;
-  console.log(expenseData);
   try {
     await ExpenseLimit.findOneAndUpdate(
       { user: expenseData.user, currentMonth: expenseData.currentMonth },
@@ -96,7 +93,6 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const expenseId = req.params.id;
   const { name, category, amount } = req.body;
-  console.log(req.body);
 
   try {
     const updatedExpense = await Expense.findByIdAndUpdate(
@@ -124,7 +120,6 @@ router.put("/:id", async (req, res) => {
 // Delete an expense
 router.delete("/:id", async (req, res) => {
   const expenseId = req.params.id;
-  console.log(expenseId);
   try {
     const deletedExpense = await Expense.findByIdAndDelete(expenseId);
     if (!deletedExpense) {
