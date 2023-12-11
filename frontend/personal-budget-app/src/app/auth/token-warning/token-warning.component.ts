@@ -25,7 +25,6 @@ export class TokenWarningComponent {
   ngOnInit(): void {
     this.tokenService.token$.subscribe((token) => {
       if (token) {
-        console.log(token);
         this.checkTokenExpiration();
       }
     });
@@ -58,7 +57,6 @@ export class TokenWarningComponent {
           positionClass: 'toast-bottom-right',
         });
         this.router.navigate(['/login']);
-        console.log(seconds);
         clearInterval(interval);
         this.hideAlert();
       }

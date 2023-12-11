@@ -52,12 +52,11 @@
     </div>
     <div
       *ngIf="
-        loginForm.get('password')!.hasError('pattern') &&
+        loginForm.get('password')?.hasError('minlength') &&
         (loginForm.get('password')!.dirty || loginForm.get('password')!.touched)
       "
     >
-      Password must contain at least 6 characters, including one letter and one
-      number.
+      Password must contain at least 6 characters.
     </div>
 
     <button type="submit" class="log">Log In</button>

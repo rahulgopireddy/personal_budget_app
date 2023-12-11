@@ -27,7 +27,7 @@ export class SidebarComponent {
   logout() {
     this._AuthService.logout();
     this.router.navigate(['/login']).then(() => {
-      this.toastr.error('everything is broken', 'Major Error', {
+      this.toastr.info('Thanks You ! ', 'Logout Successfull', {
         timeOut: 3000,
       });
     });

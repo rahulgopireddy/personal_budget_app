@@ -63,7 +63,6 @@ export class ManageExpensesComponent {
         currentMonth: this.currentMonthOneBased,
       };
       const apiData = { ...this.expenseForm.value, ...userdetails };
-      // console.log(apiData, 'data');
       // Perform API call or any other action
       this._ExpenseService.saveExpenseData(apiData).subscribe(
         () => {
@@ -96,9 +95,7 @@ export class ManageExpensesComponent {
   loadExpenseData(): void {
     this._ExpenseService.getExpenseData().subscribe(
       (data) => {
-        console.log(data, 'test');
         if (data) {
-          console.log(data);
           this.expenseForm.patchValue(data);
         } else {
         }

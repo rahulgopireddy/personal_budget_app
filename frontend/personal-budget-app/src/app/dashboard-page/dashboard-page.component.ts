@@ -24,13 +24,8 @@ export class DashboardPageComponent {
     const currentTime = Date.now();
     const timeUntilExpiration = expirationTime - currentTime;
     if (timeUntilExpiration < 10000) {
-      console.log('lest that ten secs');
-      // 10 seconds (in milliseconds)
-      // this.showAlert = true;
       this.showAlert();
       setTimeout(() => {
-        console.log('loop');
-        // this.showAlert = false;
         this.hideAlert();
       }, timeUntilExpiration);
     }

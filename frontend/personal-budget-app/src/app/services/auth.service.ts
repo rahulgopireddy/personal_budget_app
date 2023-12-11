@@ -25,13 +25,11 @@ export class AuthService {
           // Save token to local storage
           localStorage.setItem('useremail', loginData.email);
           localStorage.setItem('token', response.token);
-          console.log('token set');
         }
       })
     );
   }
   logout(): void {
-    console.log('test');
     // Remove token from local storage on logout
     localStorage.removeItem('useremail');
     localStorage.removeItem('token');
@@ -52,7 +50,6 @@ export class AuthService {
 
     if (token) {
       const expirationTime = this.jwtHelper.getTokenExpirationDate(token);
-      // console.log(expirationTime);
       return expirationTime;
     }
     return null;

@@ -21,15 +21,7 @@ export class LoginPageComponent {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/
-          ),
-        ],
-      ],
+      password: ['', [Validators.required]],
     });
   }
 
@@ -43,14 +35,12 @@ export class LoginPageComponent {
     this.router.navigate([`/signup`]); // Replace 'your-route' with the actual route path
   }
   onSubmit() {
-    console.log(this.loginForm.value);
     const LoginData = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
     this.authService.login(LoginData).subscribe(
       () => {
-        console.log('Login successful!');
         this.router.navigate(['/dashboard']);
       },
       (error) => {
