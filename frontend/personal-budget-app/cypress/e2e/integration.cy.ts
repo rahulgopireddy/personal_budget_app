@@ -1,8 +1,5 @@
 describe('template spec', () => {
   it('passes', () => {
-    cy.visit('https://example.cypress.io');
-  });
-  it('passes', () => {
     cy.visit('http://localhost:4200/login');
   });
   describe('Login Functionality', () => {
@@ -27,7 +24,7 @@ describe('template spec', () => {
     //   cy.visit('http://localhost:4200/login'); // Update with your actual login page route
 
     //   // Submit the login form without filling in credentials
-    //   cy.get('form').submit();
+    //     cy.get('.log').click();
 
     //   // Assertions for error messages
     //   cy.contains('div', 'Email is required.');

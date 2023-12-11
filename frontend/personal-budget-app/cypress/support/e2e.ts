@@ -14,7 +14,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands';
+// cypress/support/{scheme}.ts, where {scheme} defaults to e2e
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
