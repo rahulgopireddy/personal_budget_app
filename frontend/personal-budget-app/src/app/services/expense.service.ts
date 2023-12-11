@@ -12,8 +12,8 @@ interface Expense {
   providedIn: 'root',
 })
 export class ExpenseService {
-  // private apiUrl = 'http://45.55.66.148:3000/expense';
-  private apiUrl = 'http://localhost:3000/expense';
+  private apiUrl = 'http://45.55.66.148:3000/expense';
+  // private apiUrl = 'http://localhost:3000/expense';
 
   private getHeaders(): HttpHeaders {
     // Retrieve the token from local storage
@@ -37,7 +37,6 @@ export class ExpenseService {
   // addExpense(newExpense: Expense): any {
   addExpense(newExpense: Expense): Observable<Expense> {
     const headers = this.getHeaders();
-    console.log(newExpense);
     return this.http.post<Expense>(this.apiUrl, newExpense, {
       headers: headers,
     });
@@ -57,7 +56,6 @@ export class ExpenseService {
     expenseId: string,
     updatedExpense: Expense
   ): Observable<Expense> {
-    console.log(expenseId, updatedExpense);
     const headers = this.getHeaders();
     return this.http.put<Expense>(
       `${this.apiUrl}/${expenseId}`,
@@ -67,7 +65,6 @@ export class ExpenseService {
 
   deleteExpense(expenseId: string): Observable<any> {
     const headers = this.getHeaders();
-    console.log(expenseId);
     return this.http.delete(`${this.apiUrl}/${expenseId}`, {
       headers: headers,
     });
@@ -91,7 +88,6 @@ export class ExpenseService {
   }
 
   saveExpenseData(expenseData: any): Observable<any> {
-    console.log('api call', expenseData);
     return this.http.post(`${this.apiUrl}/expenselimit`, expenseData);
   }
 }

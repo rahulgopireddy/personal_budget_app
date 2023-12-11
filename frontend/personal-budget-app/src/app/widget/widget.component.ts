@@ -152,8 +152,6 @@ export class WidgetComponent {
         month: expenseMonth,
         user: this._ExpenseService.getUserEmail(),
       };
-      console.log(expenseData);
-
       if (this.expenseForm.get('_id')?.value && this.isEditedExpense) {
         this._ExpenseService
           .updateExpense(this.expenseForm.get('_id')?.value, expenseData)
@@ -166,9 +164,13 @@ export class WidgetComponent {
               this.getExpenseList(user).subscribe(() => {});
               this.expenseForm.reset();
               this.closeModal();
+              this.createChart();
+              this.isEditedExpense = false;
             } else {
               this.expenseForm.reset();
               this.closeModal();
+              this.createChart();
+              this.isEditedExpense = false;
             }
           });
       } else {
@@ -178,12 +180,12 @@ export class WidgetComponent {
               this.getExpenseList(user).subscribe(() => {});
               this.expenseForm.reset();
               this.closeModal();
+              this.createChart();
             }
           }
         });
       }
     } else {
-      console.log('else');
     }
   }
   getExpenseList(user: any): Observable<any> {
@@ -199,10 +201,8 @@ export class WidgetComponent {
   }
 
   editExpense(expense: any) {
-    console.log(expense);
     this.isEditedExpense = true;
     const foundObject = this.ExpenseList.find((obj) => obj._id === expense);
-    console.log(foundObject);
     if (foundObject) {
       this.expenseForm.setValue({
         amount: foundObject.amount,
@@ -267,7 +267,6 @@ export class WidgetComponent {
             }
             this.expenseForm.patchValue(data);
           } else {
-            console.log(data.length);
           }
         },
         (error) => {
@@ -285,12 +284,24 @@ export class WidgetComponent {
       )
     );
   }
-
+  resetValues() {
+    this.expenseForm.reset({
+      name: '',
+      category: 'Income',
+      amount: '',
+      month: 'December',
+      _id: '',
+    });
+  }
   createCategoryBarChart() {
     this.loading = false;
-    const totalexpenditureCategory = this.calculateTotalExpenditure(
+    const totalexpenditureCategory = this.calculateTotalAmountPerMonth(
       this.ExpenseList
     );
+
+    // this.calculateTotalExpenditure(
+    //   this.ExpenseList
+    // );
     const ctx: any = this.myCanvas.nativeElement.getContext('2d');
     if (this.categoryBarChartq) {
       this.categoryBarChartq.destroy();
@@ -317,7 +328,7 @@ export class WidgetComponent {
         },
         title: {
           display: true,
-          text: 'Budget Spent Comparision ',
+          text: 'Budget Spent Across the Year ',
         },
       },
     };
@@ -326,38 +337,35 @@ export class WidgetComponent {
       type: 'bar',
       data: {
         labels: [
-          'Income',
-          'Housing',
-          'Transportation',
-          'Food',
-          'Health',
-          'Debt Payments',
-          'Savings',
-          'Entertainment',
-          'Personal Care',
-          'Education',
-          'Miscellaneous',
-          'Insurance',
-          'Taxes',
-          'Childcare',
-          'Investments',
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
         ],
         datasets: [
           {
             label: 'Spending',
             data: [
-              totalexpenditureCategory['income'],
-              totalexpenditureCategory['housing'],
-              totalexpenditureCategory['transportation'],
-              totalexpenditureCategory['food'],
-              totalexpenditureCategory['health'],
-              totalexpenditureCategory['savings'],
-              totalexpenditureCategory['education'],
-              totalexpenditureCategory['miscellaneous'],
-              totalexpenditureCategory['insurance'],
-              totalexpenditureCategory['taxes'],
-              totalexpenditureCategory['childcare'],
-              totalexpenditureCategory['investments'],
+              totalexpenditureCategory['January'],
+              totalexpenditureCategory['February'],
+              totalexpenditureCategory['March'],
+              totalexpenditureCategory['April'],
+              totalexpenditureCategory['May'],
+              totalexpenditureCategory['June'],
+              totalexpenditureCategory['July'],
+              totalexpenditureCategory['August'],
+              totalexpenditureCategory['September'],
+              totalexpenditureCategory['October'],
+              totalexpenditureCategory['November'],
+              totalexpenditureCategory['December'],
             ],
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
@@ -542,11 +550,27 @@ export class WidgetComponent {
       options: options,
     });
   }
+
+  calculateTotalAmountPerMonth(expenses: any[]): { [key: string]: number } {
+    const totalAmountPerMonth: { [key: string]: number } = {};
+
+    expenses.forEach((item) => {
+      const month = item.month;
+      const amount = item.amount;
+
+      if (totalAmountPerMonth[month]) {
+        totalAmountPerMonth[month] += amount;
+      } else {
+        totalAmountPerMonth[month] = amount;
+      }
+    });
+    return totalAmountPerMonth;
+  }
   calculateTotalExpenditure(expenses: any) {
     const totalExpenditure: Record<string, number> = {};
 
     expenses.forEach((expense: any) => {
-      const { category, amount } = expense;
+      const { category, amount, month } = expense;
 
       // Convert category to lowercase and remove spaces
       const formattedCategory = category.toLowerCase().replace(/\s/g, '');

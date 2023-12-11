@@ -50,10 +50,8 @@ export class SignupPageComponent {
     this.router.navigate([`/login`]); // Replace 'your-route' with the actual route path
   }
   onSubmit() {
-    console.log(this.signupForm.value, this.signupForm.valid);
     if (this.signupForm.valid) {
       // Handle form submission logic here
-      console.log(this.signupForm.value);
       const signupData = {
         name: this.signupForm.value.name,
         email: this.signupForm.value.email,

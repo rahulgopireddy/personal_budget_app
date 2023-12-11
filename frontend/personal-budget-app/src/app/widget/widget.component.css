@@ -94,18 +94,6 @@
   width: 100%;
   font-size: 11px;
 }
-/* Add this to your global styles or component styles */
-:host /deep/ ngx-datatable-header-cell .datatable-icon-up,
-:host /deep/ ngx-datatable-header-cell .datatable-icon-down {
-  font-size: 16px; /* Set the font size */
-  color: #007bff; /* Set the color */
-  /* Add other styles as needed */
-}
-
-:host /deep/ ngx-datatable-header-cell.sort-active .datatable-icon-up,
-:host /deep/ ngx-datatable-header-cell.sort-active .datatable-icon-down {
-  /* Additional styles for the active sort state, if desired */
-}
 
 .resize-handle {
   color: #fff;
